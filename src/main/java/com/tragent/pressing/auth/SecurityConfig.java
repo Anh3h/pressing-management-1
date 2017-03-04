@@ -1,7 +1,6 @@
 package com.tragent.pressing.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.autoconfigure.ManagementServerProperties.SessionCreationPolicy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -27,7 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
 		
-        http.authorizeRequests()
+		http.csrf().disable()
+        	.authorizeRequests()
         	.antMatchers(HttpMethod.POST, "/api/v1/authenticate").permitAll()
             .anyRequest().authenticated()
             .and()

@@ -49,7 +49,7 @@ public class UserController {
 	/**
 	 * Get user with given user id.
 	 * 
-	 * @param id id of the user to return
+	 * @param userId
 	 * @return the user with given id or 404 if id is not found
 	 */
 	@RequestMapping(value="/{id}",
@@ -88,7 +88,7 @@ public class UserController {
 	/**
 	 * update user's information
 	 * 
-	 * @param id, id of the user
+	 * @param userId
 	 * @return the updated user information.
 	 */
 	@RequestMapping(value="/{userId}",

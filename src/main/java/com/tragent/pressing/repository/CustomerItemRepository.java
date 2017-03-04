@@ -12,5 +12,6 @@ public interface CustomerItemRepository extends JpaRepository<CustomerItem, Long
 	
 	Collection<CustomerItem> findByDepositeDate(@Param("date") Date date);
 	Collection<CustomerItem> findByDueDate(@Param("date") Date date);
-	
+	Collection<CustomerItem> findByCustomer(@Param("date") Long id );
+	Collection<CustomerItem> findByItem(@Param("date") Long id );
 }

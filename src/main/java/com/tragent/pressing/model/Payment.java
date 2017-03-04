@@ -25,8 +25,7 @@ public class Payment {
 	
 	@ManyToOne(optional=false)
 	@JoinColumns({
-        @JoinColumn(name="customer_id", referencedColumnName="customer_id"),
-        @JoinColumn(name="item_id", referencedColumnName="item_id")
+        @JoinColumn(name="customer_item_id", referencedColumnName="id")
     })
 	private CustomerItem customerItem;
 	

@@ -3,6 +3,7 @@ package com.tragent.pressing.service.implementation;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import com.tragent.pressing.model.Customer;
@@ -10,6 +11,7 @@ import com.tragent.pressing.repository.CustomerRepository;
 import com.tragent.pressing.service.CustomerService;
 
 @Service
+@Secured("ROLE_MANAGEMENT")
 public class CustomerServiceImpl implements CustomerService {
 	
 	@Autowired
@@ -20,7 +22,6 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		Collection<Customer> customers = customerRepository.findAll();
 		return customers;
-		
 	}
 
 	@Override
@@ -29,7 +30,6 @@ public class CustomerServiceImpl implements CustomerService {
 
 		Customer customer = customerRepository.findOne(id);
 		return customer;
-		
 	}
 
 	@Override
@@ -37,7 +37,6 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		Customer customer = customerRepository.findByEmail(email);
 		return customer;
-		
 	}
 
 	@Override
@@ -49,19 +48,18 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		Customer savedCustomer = customerRepository.save(customer);
 		return savedCustomer;
-		
 	}
 
 	@Override
 	public Customer update(Customer customer) {
 
 		if (customerRepository.exists(customer.getId())) {
-			return null;
+
+			Customer savedCustomer = customerRepository.save(customer);
+			return savedCustomer;
 		}
 		
-		Customer savedCustomer = customerRepository.save(customer);
-		return savedCustomer;
-		
+		return null;
 	}
 
 	@Override
@@ -73,7 +71,6 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 		
 		customerRepository.delete(id);
-		
 	}
 
 }

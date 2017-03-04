@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import com.tragent.pressing.model.Category;
 
-/* Service that provides CRUD operation for Categories  */
+/* Service that provides CRUD operations for Categories  */
 public interface CategoryService {
 	
 	/**
@@ -29,7 +29,7 @@ public interface CategoryService {
 	 * @return the category object if found else return null
 	 */
 	public Category findByName(String name);
-	
+		
 	/**
 	 * Create new Category.
 	 * 

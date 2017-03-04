@@ -9,6 +9,4 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
 	Category findByName(@Param("name") String name);
 	
-	//Collection<Category> findBycategoryEnable(@Param("categoryEnable") boolean categoryEnable);
-	
 }

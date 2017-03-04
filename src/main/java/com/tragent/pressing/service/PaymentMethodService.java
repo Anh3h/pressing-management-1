@@ -5,7 +5,7 @@ import java.util.Collection;
 import com.tragent.pressing.model.PaymentMethod;
 
 
-/* Service that provides CRUD operation for payment methods  */
+/* Service that provides CRUD operations for payment methods  */
 public interface PaymentMethodService {
 
 	/**

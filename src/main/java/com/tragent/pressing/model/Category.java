@@ -22,6 +22,7 @@ public class Category {
 	@Column(nullable=false)
 	private String type;
 	
+	@Column(nullable=true)
 	private String description;
 	
 	@OneToMany( mappedBy = "category", cascade = CascadeType.ALL )

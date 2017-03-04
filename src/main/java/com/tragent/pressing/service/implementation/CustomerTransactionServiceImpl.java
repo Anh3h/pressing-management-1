@@ -3,6 +3,7 @@ package com.tragent.pressing.service.implementation;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import com.tragent.pressing.model.CleaningTransaction;
@@ -12,6 +13,7 @@ import com.tragent.pressing.repository.CustomerItemRepository;
 import com.tragent.pressing.service.CustomerTransactionService;
 
 @Service
+@Secured({"ROLE_MANAGEMENT", "ROLE_SALES_AGENT"})
 public class CustomerTransactionServiceImpl implements CustomerTransactionService {
 	
 	@Autowired
@@ -24,7 +26,13 @@ public class CustomerTransactionServiceImpl implements CustomerTransactionServic
 	}
 
 	@Override
-	public Collection<CleaningTransaction> findByDate(String name) {
+	public Collection<CleaningTransaction> findByDueDate(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Collection<CleaningTransaction> findByDepositeDate(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -52,12 +60,6 @@ public class CustomerTransactionServiceImpl implements CustomerTransactionServic
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	/*@Override
-	public Collection<Payment> getPayment(CustomerItem customerItem) {
-		// TODO Auto-generated method stub
-		return null;
-	}*/
 
 	@Override
 	public Collection<Payment> getPayments(CustomerItem customerItem) {

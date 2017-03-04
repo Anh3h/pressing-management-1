@@ -2,9 +2,10 @@ package com.tragent.pressing.service;
 
 import java.util.Collection;
 
+import com.tragent.pressing.model.Category;
 import com.tragent.pressing.model.CleaningMaterial;
 
-/* Service that provides CRUD operation for cleaning materials  */
+/* Service that provides CRUD operations for cleaning materials  */
 public interface CleaningMaterialService {
 
 	/**
@@ -29,6 +30,14 @@ public interface CleaningMaterialService {
 	 * @return the cleaning material object if found else return null
 	 */
 	public CleaningMaterial findByName(String name);
+	
+	/**
+	 * Find a cleaning material by category.
+	 * 
+	 * @param category the cleaning material's category
+	 * @return collection of cleaning materials
+	 */
+	public Collection<CleaningMaterial> findByCategory(Long categoryId);
 	
 	/**
 	 * Create a new cleaning material object.

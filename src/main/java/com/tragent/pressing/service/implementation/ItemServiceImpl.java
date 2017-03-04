@@ -3,24 +3,30 @@ package com.tragent.pressing.service.implementation;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
+import com.tragent.pressing.model.Category;
 import com.tragent.pressing.model.Item;
+import com.tragent.pressing.repository.CategoryRepository;
 import com.tragent.pressing.repository.ItemRepository;
 import com.tragent.pressing.service.ItemService;
 
 @Service
+@Secured("ROLE_MANAGEMENT")
 public class ItemServiceImpl implements ItemService {
 	
 	@Autowired
 	private ItemRepository itemRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 
 	@Override
 	public Collection<Item> findAll() {
 		
 		Collection<Item> items = itemRepository.findAll();
-		return items;
-		
+		return items;	
 	}
 
 	@Override
@@ -28,7 +34,6 @@ public class ItemServiceImpl implements ItemService {
 		
 		Item item = itemRepository.findOne(id);
 		return item;
-		
 	}
 
 	@Override
@@ -36,7 +41,6 @@ public class ItemServiceImpl implements ItemService {
 		
 		Item item = itemRepository.findByName(name);
 		return item;
-		
 	}
 
 	@Override
@@ -48,19 +52,16 @@ public class ItemServiceImpl implements ItemService {
 		
 		Item savedItem = itemRepository.save(item);
 		return savedItem;
-		
 	}
 
 	@Override
 	public Item update(Item item) {
 
-		if (itemRepository.exists(item.getId())) {
-			return null;
+		if (itemRepository.findByName(item.getName()) == null) {
+			Item updatedItem = itemRepository.save(item);
+			return updatedItem;
 		}
-		
-		Item savedItem = itemRepository.save(item);
-		return savedItem;
-		
+		return null;
 	}
 
 	@Override
@@ -72,7 +73,14 @@ public class ItemServiceImpl implements ItemService {
 		}
 		
 		itemRepository.delete(item);
+	}
+
+	@Override
+	public Collection<Item> findCategoryItems(Long categoryId) {
 		
+		Category category = categoryRepository.findOne(categoryId);
+		Collection<Item> items = itemRepository.findByCategory(category);
+		return items;
 	}
 
 }

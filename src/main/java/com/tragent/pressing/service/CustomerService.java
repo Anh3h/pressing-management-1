@@ -4,8 +4,9 @@ import java.util.Collection;
 
 import com.tragent.pressing.model.Customer;
 
-/* Service that provides CRUD operation for customers  */
+/* Service that provides CRUD operations for customers  */
 public interface CustomerService {
+	
 	/**
 	 * Get all customers in the system.
 	 * 

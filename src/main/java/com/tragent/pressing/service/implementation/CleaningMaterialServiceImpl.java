@@ -3,17 +3,24 @@ package com.tragent.pressing.service.implementation;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
+import com.tragent.pressing.model.Category;
 import com.tragent.pressing.model.CleaningMaterial;
+import com.tragent.pressing.repository.CategoryRepository;
 import com.tragent.pressing.repository.CleaningMaterialRepository;
 import com.tragent.pressing.service.CleaningMaterialService;
 
 @Service
+@Secured("ROLE_MANAGEMENT")
 public class CleaningMaterialServiceImpl implements CleaningMaterialService {
 	
 	@Autowired
 	private CleaningMaterialRepository cleaningMaterialRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 
 	@Override
 	public Collection<CleaningMaterial> findAll() {
@@ -21,7 +28,6 @@ public class CleaningMaterialServiceImpl implements CleaningMaterialService {
 		Collection<CleaningMaterial> cleaningMaterials;
 		cleaningMaterials = cleaningMaterialRepository.findAll();
 		return cleaningMaterials;
-		
 	}
 
 	@Override
@@ -30,7 +36,6 @@ public class CleaningMaterialServiceImpl implements CleaningMaterialService {
 		CleaningMaterial cleaningMaterial;
 		cleaningMaterial = cleaningMaterialRepository.findOne(id);
 		return cleaningMaterial;
-		
 	}
 
 	@Override
@@ -39,7 +44,6 @@ public class CleaningMaterialServiceImpl implements CleaningMaterialService {
 		CleaningMaterial cleaningMaterial;
 		cleaningMaterial = cleaningMaterialRepository.findByName(name);
 		return cleaningMaterial;
-		
 	}
 
 	@Override
@@ -52,20 +56,18 @@ public class CleaningMaterialServiceImpl implements CleaningMaterialService {
 		CleaningMaterial savedCleaningMaterial;
 		savedCleaningMaterial = cleaningMaterialRepository.save(cleaningMaterial);
 		return savedCleaningMaterial;
-		
 	}
 
 	@Override
 	public CleaningMaterial update(CleaningMaterial cleaningMaterial) {
 
-		if (cleaningMaterialRepository.exists(cleaningMaterial.getId())) {
-			return null;
+		if (cleaningMaterialRepository.findByName(cleaningMaterial.getName()) == null) {
+			CleaningMaterial savedCleaningMaterial;
+			savedCleaningMaterial = cleaningMaterialRepository.save(cleaningMaterial);
+			return savedCleaningMaterial;
 		}
-		
-		CleaningMaterial savedCleaningMaterial;
-		savedCleaningMaterial = cleaningMaterialRepository.save(cleaningMaterial);
-		return savedCleaningMaterial;
-		
+
+		return null;
 	}
 
 	@Override
@@ -77,7 +79,14 @@ public class CleaningMaterialServiceImpl implements CleaningMaterialService {
 		}
 		
 		cleaningMaterialRepository.delete(cleaningMaterial);
+	}
+
+	@Override
+	public Collection<CleaningMaterial> findByCategory(Long categoryId) {
 		
+		Category category = categoryRepository.findOne(categoryId);
+		Collection<CleaningMaterial> cleaningMaterials = cleaningMaterialRepository.findByCategory(category);
+		return cleaningMaterials;
 	}
 
 }

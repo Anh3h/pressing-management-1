@@ -4,15 +4,15 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.AssociationOverride;
-import javax.persistence.AssociationOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,14 +25,23 @@ enum Status {
 @Entity
 //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
 @Table(name="customer_item")
-@AssociationOverrides({
-@AssociationOverride(name ="id.item", joinColumns = @JoinColumn(name="item_id")),
-@AssociationOverride(name ="id.customer", joinColumns = @JoinColumn(name="customer_id"))
-        })
 public class CustomerItem implements Serializable {
+	
+	@Id
+	@GeneratedValue
+	private Long id;
 
-	@EmbeddedId
-	private CustomerItemId id = new CustomerItemId() ;
+	//@Id
+	//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id", scope=ServerRequest.class)
+	@ManyToOne(optional=false)
+	@JoinColumn(name="customer_id", referencedColumnName = "id")
+	private Customer customer;
+		
+	//@Id
+	//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id", scope=ServerRequest.class)
+	@ManyToOne(optional=false)
+	@JoinColumn(name="item_id", referencedColumnName = "id")
+	private Item item;
 	
 	@Column(nullable=false)
 	private int quantity;
@@ -58,19 +67,19 @@ public class CustomerItem implements Serializable {
 	}
 
 	public Customer getCustomer() {
-		return this.id.getCustomer();
+		return this.customer;
 	}
 
 	public void setCustomer(Customer customer) {
-		this.id.setCustomer(customer);
+		this.customer = customer;
 	}
 
 	public Item getItem() {
-		return this.id.getItem();
+		return this.item;
 	}
 
 	public void setItem(Item item) {
-		this.id.setItem(item);
+		this.item = item;
 	}
 
 	public int getQuantity() {

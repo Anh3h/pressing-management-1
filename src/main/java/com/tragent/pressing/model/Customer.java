@@ -28,7 +28,7 @@ public class Customer {
 	@Column(nullable=false, unique=true)
 	private String email;
 	
-	@OneToMany(mappedBy="id.customer", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
 	private List<CustomerItem> customerItems;
 
 	public Customer() {

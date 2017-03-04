@@ -3,6 +3,7 @@ package com.tragent.pressing.service.implementation;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import com.tragent.pressing.model.Category;
@@ -10,6 +11,7 @@ import com.tragent.pressing.repository.CategoryRepository;
 import com.tragent.pressing.service.CategoryService;
 
 @Service
+@Secured("ROLE_MANAGEMENT")
 public class CategoryServiceImpl implements CategoryService {
 	
 	@Autowired
@@ -20,7 +22,6 @@ public class CategoryServiceImpl implements CategoryService {
 		
 		Collection<Category> categories = categoryRepository.findAll();
 		return categories;
-		
 	}
 
 	@Override
@@ -34,8 +35,7 @@ public class CategoryServiceImpl implements CategoryService {
 	public Category findByName(String name) {
 		
 		Category category = categoryRepository.findByName(name);
-		return category;
-		
+		return category;	
 	}
 
 	@Override
@@ -47,19 +47,18 @@ public class CategoryServiceImpl implements CategoryService {
 		
 		Category savedCategory = categoryRepository.save(category);
 		return savedCategory;
-		
 	}
 
 	@Override
 	public Category update(Category category) {
 		
-		if ( categoryRepository.exists(category.getId()) ) {
-			return null;
+		if ( categoryRepository.findByName(category.getName()) == null ) {
+
+			Category savedCategory = categoryRepository.save(category);
+			return savedCategory;
 		}
-		
-		Category savedCategory = categoryRepository.save(category);
-		return savedCategory;
-		
+
+		return null;
 	}
 
 	@Override
@@ -71,7 +70,6 @@ public class CategoryServiceImpl implements CategoryService {
 		}
 		
 		categoryRepository.delete(category);
-		
 	}
 
 }

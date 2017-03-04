@@ -6,7 +6,7 @@ import com.tragent.pressing.model.CleaningTransaction;
 import com.tragent.pressing.model.CustomerItem;
 import com.tragent.pressing.model.Payment;
 
-/* Service that provides CRUD operation for customer transactions  */
+/* Service that provides CRUD operations for customer transactions  */
 public interface CustomerTransactionService {
 	
 	/**
@@ -33,12 +33,20 @@ public interface CustomerTransactionService {
 	public CleaningTransaction findByItemId(Long id);
 	
 	/**
-	 * Find cleaning transaction(s) by date.
+	 * Find cleaning transaction(s) by due date.
 	 * 
-	 * @param date the cleaning transactions ( deposit or collect items)
+	 * @param dueDate date to collect an item
 	 * @return collection of transactions if found, else return null
 	 */
-	public Collection<CleaningTransaction> findByDate(String name);
+	public Collection<CleaningTransaction> findByDueDate(String name);
+	
+	/**
+	 * Find cleaning transaction(s) by deposite date.
+	 * 
+	 * @param depositeDate date an item  was deposited
+	 * @return collection of transactions if found, else return null
+	 */
+	public Collection<CleaningTransaction> findByDepositeDate(String name);
 	
 	/**
 	 * Get all payments for a transaction.

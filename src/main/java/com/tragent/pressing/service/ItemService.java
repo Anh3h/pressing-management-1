@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import com.tragent.pressing.model.Item;
 
-/* Service that provides CRUD operation for items  */
+/* Service that provides CRUD operations for items  */
 public interface ItemService {
 	
 	/**
@@ -29,6 +29,14 @@ public interface ItemService {
 	 * @return the item object if found, else return null
 	 */
 	public Item findByName(String name);
+	
+	/**
+	 * Find a items with same category.
+	 * 
+	 * @param name the category's id
+	 * @return the item object if found else return null
+	 */
+	public Collection<Item> findCategoryItems(Long id);
 	
 	/**
 	 * Create new Item.

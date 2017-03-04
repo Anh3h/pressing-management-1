@@ -3,6 +3,7 @@ package com.tragent.pressing.service.implementation;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import com.tragent.pressing.model.PaymentMethod;
@@ -10,6 +11,7 @@ import com.tragent.pressing.repository.PaymentMethodRepository;
 import com.tragent.pressing.service.PaymentMethodService;
 
 @Service
+@Secured("ROLE_MANAGEMENT")
 public class PaymentMethodServiceImpl implements PaymentMethodService{
 	
 	@Autowired
@@ -20,7 +22,6 @@ public class PaymentMethodServiceImpl implements PaymentMethodService{
 		
 		Collection<PaymentMethod> paymentMethod = paymentMethodRepository.findAll();
 		return paymentMethod;
-		
 	}
 
 	@Override
@@ -28,7 +29,6 @@ public class PaymentMethodServiceImpl implements PaymentMethodService{
 		
 		PaymentMethod paymentMethod = paymentMethodRepository.findOne(id);
 		return paymentMethod;
-		
 	}
 
 	@Override
@@ -47,19 +47,17 @@ public class PaymentMethodServiceImpl implements PaymentMethodService{
 		
 		PaymentMethod savedPaymentMethod = paymentMethodRepository.save(paymentMethod);
 		return savedPaymentMethod;
-		
 	}
 
 	@Override
 	public PaymentMethod update(PaymentMethod paymentMethod) {
 
 		if (paymentMethodRepository.exists(paymentMethod.getId())) {
-			return null;
+			PaymentMethod savedPaymentMethod = paymentMethodRepository.save(paymentMethod);
+			return savedPaymentMethod;
 		}
 		
-		PaymentMethod savedPaymentMethod = paymentMethodRepository.save(paymentMethod);
-		return savedPaymentMethod;
-		
+		return null;
 	}
 
 	@Override
@@ -71,7 +69,6 @@ public class PaymentMethodServiceImpl implements PaymentMethodService{
 		}
 		
 		paymentMethodRepository.delete(id);
-		
 	}
 
 }

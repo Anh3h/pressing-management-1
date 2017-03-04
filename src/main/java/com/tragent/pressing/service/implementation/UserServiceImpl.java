@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.tragent.pressing.model.CustomUser;
@@ -13,13 +12,13 @@ import com.tragent.pressing.repository.UserRepository;
 import com.tragent.pressing.service.UserService;
 
 @Service
+@Secured("ROLE_MANAGEMENT")
 public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
 
 	@Override
-	@Secured("ROLE_MANAGEMENT")
 	public Collection<CustomUser> findAll() {
 		
 		List<CustomUser> users = userRepository.findAll();
@@ -69,7 +68,6 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		userRepository.delete(user);
-		
 	}
 
 }

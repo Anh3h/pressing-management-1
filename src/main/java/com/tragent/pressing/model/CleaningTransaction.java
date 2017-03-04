@@ -5,7 +5,6 @@ import java.util.Collection;
 public class CleaningTransaction {
 	
 	private CustomerItem customerItem;
-	
 	private Collection<Payment> payments;
 
 	public CleaningTransaction(CustomerItem customerItem, Collection<Payment> payments) {

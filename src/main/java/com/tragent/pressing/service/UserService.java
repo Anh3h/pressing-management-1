@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import com.tragent.pressing.model.CustomUser;
 
-/* Service that provides CRUD operation for users  */
+/* Service that provides CRUD operations for users  */
 public interface UserService {
 
 	/**
